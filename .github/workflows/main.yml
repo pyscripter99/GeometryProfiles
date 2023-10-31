@@ -2,13 +2,12 @@
 name: goreleaser
 
 on:
-  - push
-  - workflow_dispatch
+  push:
+    tags:
+      - "*"
 
 permissions:
   contents: write
-  # packages: write
-  # issues: write
 
 jobs:
   goreleaser:
@@ -21,10 +20,8 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version: stable
-      - uses: phish108/autotag-action@v1.1.55
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          with-v: true
+      # More assembly might be required: Docker logins, GPG, etc.
+      # It all depends on your needs.
       - uses: goreleaser/goreleaser-action@v5
         with:
           distribution: goreleaser
