@@ -2,14 +2,22 @@
 name: goreleaser
 
 on:
-  push:
-    tags:
-      - "*"
+  - workflow_dispatch
 
 permissions:
   contents: write
 
 jobs:
+  tag:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: 
+        - 12
+    steps: 
+    - uses: phish108/autotag-action@v1.1.55
+      with:
+          github-token: ${{ secrets.GITHUB_TOKEN}}
   goreleaser:
     runs-on: ubuntu-latest
     steps:
